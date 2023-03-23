@@ -1,4 +1,3 @@
-[![PyPI version](https://badge.fury.io/py/dallecli.png)](https://badge.fury.io/py/dallecli)[![PyPI download month](https://img.shields.io/pypi/dm/dallecli.svg)](https://pypi.python.org/pypi/dallecli/)[![Linux](https://svgshare.com/i/Zhy.svg)](https://svgshare.com/i/Zhy.svg)[![macOS](https://svgshare.com/i/ZjP.svg)](https://svgshare.com/i/ZjP.svg)
 # ImgGenCli 💠
 
 `imggencli` is a community-maintained cli designed to provide users with the ability to generate, edit and filter images using the DALL-E 2 API provided by OpenAI, all from the command line.
