@@ -85,14 +85,4 @@ Options:
   --help                          Show this message and exit.
 ```
 
-**```update```**
-```console
-Usage: imggencli update [OPTIONS]
-
-  🔐 Update the OpenAI API key.
-
-Options:
-  --help  Show this message and exit.
-```
-
-Please feel to create issues or request for features. There will be many features added to the cli.
+### Updates / Changes / Future Scope : Implementing img2img in the same cli application
