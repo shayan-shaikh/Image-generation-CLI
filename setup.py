@@ -12,7 +12,7 @@ setup(
     name="imggencli",
     python_requires=">3.5",
     options={"bdist_wheel": {"universal": "1"}},
-    version="1.3.3",
+    version="1.4.4",
     description="A command line application to generate customized images based on the Open AI API.",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -23,5 +23,6 @@ setup(
     keywords=["cli", "developer tools", "productivity", "openai", "generative art", "ai"],
     packages=find_packages(),
     install_requires=["click==8.1.3", "openai==0.27.2", "rich==13.3.1", "idna", "pillow"],
-    entry_points={"console_scripts": ["imggencli = dallecli.cli:cli"]},
+    entry_points={"console_scripts": ["imggencli=imggencli.cli:cli"]},
+
 )
