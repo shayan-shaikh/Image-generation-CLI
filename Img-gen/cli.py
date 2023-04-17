@@ -131,7 +131,7 @@ def apply_filter_choices(image, filter_name):
 
 
 @click.group(name='ImggenCli')
-@click.version_option(version="1.2.4")
+@click.version_option(version="1.3.1")
 def cli():
     """💠 Use this Open AI api to generate, as well as customize : edit & filter images from the cmd line."""
 
