@@ -52,6 +52,29 @@ def generate_image(prompt, size, filter, iterations, save_path=None):
         print("❌ Failed to generate image. Please try again with a different prompt.")
 
 
+def generate_variations(input_file, n, save_path=None):
+    try:
+        with console.status("Generating image...", spinner="dots8Bit"):
+            response = openai.Image.create_variation(
+                image=open(input_file, "rb"),
+                n=n,
+                size="1024x1024"
+            )
+            image_data = requests.get(
+                response.get("data")[0]["url"], timeout=300
+            ).content
+            image = Image.open(BytesIO(image_data))
+            image.show()
+            if save_path is not None:
+                if not path.exists(path.dirname(save_path)):
+                    makedirs(path.dirname(save_path))
+                image.save(save_path)
+    except openai.error.AuthenticationError:
+        print("🔒 Authentication Failed. Try with a fresh API key.")
+    except Exception:
+        print("❌ Failed to generate image. Please try again with a different prompt.")
+
+
 def edit_image(image, brightness=None, contrast=None, sharpness=None):
     if brightness is not None:
         image = ImageEnhance.Brightness(image).enhance(brightness)
@@ -108,35 +131,17 @@ def apply_filter_choices(image, filter_name):
 
 
 @click.group()
-@click.version_option(version="1.2.0")
+@click.version_option(version="1.2.3")
 def cli():
     """💠 Use this Open AI api to generate, as well as customize : edit & filter images from the cmd line."""
 
 
 @click.command("img2img")
 @click.argument('input_file')
-@click.option('--n', default=2, help='Number of variations to generate')
-def generate_variations(input_file, n, save_path=None):
-    try:
-        with console.status("Generating image...", spinner="dots8Bit"):
-            response = openai.Image.create_variation(
-                image=open(input_file, "rb"),
-                n=n,
-                size="1024x1024"
-            )
-            image_data = requests.get(
-                response.get("data")[0]["url"], timeout=300
-            ).content
-            image = Image.open(BytesIO(image_data))
-            image.show()
-            if save_path is not None:
-                if not path.exists(path.dirname(save_path)):
-                    makedirs(path.dirname(save_path))
-                image.save(save_path)
-    except openai.error.AuthenticationError:
-        print("🔒 Authentication Failed. Try with a fresh API key.")
-    except Exception:
-        print("❌ Failed to generate image. Please try again with a different prompt.")
+@click.option('--n', default=2,type=int, help='Number of variations to generate')
+def generate_img(input_file, numVars):
+    configure_openai()
+    generate_variations(input_file=input_file, n=numVars)
 
 
 @cli.command("generate")
@@ -290,4 +295,3 @@ def get_unique_filename(filename):
         filename = f"{name}_{i}{ext}"
         i += 1
     return filename
-
