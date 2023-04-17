@@ -291,6 +291,3 @@ def get_unique_filename(filename):
         i += 1
     return filename
 
-
-if __name__ == '__main__':
-    generate_variations()
