@@ -24,4 +24,5 @@ setup(
     packages=find_packages(),
     install_requires=["click==8.1.3", "openai==0.27.2", "rich==13.3.1", "idna", "pillow"],
     entry_points={"console_scripts": ["imggencli=imggencli.cli:cli"]},
+
 )
