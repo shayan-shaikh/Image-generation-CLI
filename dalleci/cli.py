@@ -131,7 +131,7 @@ def apply_filter_choices(image, filter_name):
 
 
 @click.group()
-@click.version_option(version="1.3.1")
+@click.version_option(version="1.3.2")
 def cli():
     """💠 Use this Open AI api to generate, as well as customize : edit & filter images from the cmd line."""
 
@@ -140,6 +140,7 @@ def cli():
 @click.argument('input_file')
 @click.option('--n', default=2, type=int, help='Number of variations to generate')
 def generate_img(input_file, numVars):
+    """🌸 Generate an image from an existing image using Open Ai"""
     configure_openai()
     generate_variations(input_file=input_file, n=numVars)
 
