@@ -37,6 +37,7 @@ Options:
 Commands:
   edit      🎴 Change the brightness, contrast and sharpness of an image.
   filter    🦄 Apply filters and effects to an image.
+  img2img   🌸 Generate an image from an existing image.
   generate  🌸 Generate an image from the OpenAI Dalle api.
   update    🔐 Update the OpenAI API key.
 ```
@@ -85,4 +86,9 @@ Options:
   --help                          Show this message and exit.
 ```
 
-### Updates / Changes / Future Scope : Implementing img2img in the same cli application
+### Updates / Changes / Future Scope : Implementing img2img in the same cli application [Completed as of 17/04/2023]
+
+**```img2img```**
+```console
+Usage: imggencli img2img IMAGE_PATH
+
