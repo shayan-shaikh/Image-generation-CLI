@@ -37,8 +37,8 @@ Options:
 Commands:
   edit      🎴 Change the brightness, contrast and sharpness of an image.
   filter    🦄 Apply filters and effects to an image.
-  img2img   🌸 Generate an image from an existing image.
   generate  🌸 Generate an image from the OpenAI Dalle api.
+  img2img   🖼️ Generate a variation of an image from an existing image.
   update    🔐 Update the OpenAI API key.
 ```
 
@@ -86,9 +86,30 @@ Options:
   --help                          Show this message and exit.
 ```
 
-### Updates / Changes / Future Scope : Implementing img2img in the same cli application [Completed as of 17/04/2023]
+**```update```**
+```console
+Usage: imggencli update [OPTIONS]
+
+  🔐 Update the OpenAI API key.
+
+Options:
+  --help  Show this message and exit.
+```
 
 **```img2img```**
 ```console
 Usage: imggencli img2img IMAGE_PATH
 
+  🖼️ Generate a variation of an image from an existing image.
+
+Options:
+  --help  Show this message and exit.
+
+```
+
+
+### Drawbacks as of now : 
+- Image variation strictly needs a square image of a Square dimension.
+- Image variation requires only a PNG image of depth 24 bit. Other formats will have to be converted into a 24 bit PNG square image.
+- Image variation is not very accurate and can be improved upon. Accuracy has been kept low to facilitate use of the app on low end devices as well.
+- Quality of images may not be the best to again ensure not only heavy performing but every device can run the app.
