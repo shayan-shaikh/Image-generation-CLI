@@ -1,4 +1,4 @@
-# ImgGenCli 💠
+# ImgGenCli : Image Generation Command Line Interface 💠
 
 `imggencli` is a community-maintained cli designed to provide users with the ability to generate, edit and filter images using the DALL-E 2 API provided by OpenAI, all from the command line.
 
