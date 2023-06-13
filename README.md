@@ -4,6 +4,8 @@
 
 The tool provides three main commands, generate, edit, and filter.
 
+Testing for actions.
+
 The `generate` command allows the user to generate an image using a prompt, with the option to apply a filter, specify the size, and choose the number of times to generate the image. The generated image can also be saved to a specified file path.
 
 The `edit` command provides the ability to edit an existing image by adjusting the brightness, contrast, and sharpness of the image. The edited image is then saved to a new file.
