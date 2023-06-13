@@ -1,0 +1,54 @@
+name: Pull Request Approval
+
+on:
+  pull_request_review:
+    types:
+      - submitted
+
+jobs:
+  merge_on_approval:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checking for approval
+        run: echo "Approval is required."
+
+      - name: Get pull request information
+        id: pr
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { data: pullRequest } = await github.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number
+            });
+
+            return {
+              pullRequestId: pullRequest.id,
+              pullRequestNumber: pullRequest.number,
+              author: pullRequest.user.login
+            }
+
+      - name: Check if Manager approved
+        id: check_approval
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { data: reviews } = await github.pulls.listReviews({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number
+            });
+
+            const approver = 'shayan-shaikh';
+            const approved = reviews.some(review => review.user.login === approver && review.state === 'APPROVED');
+            return {
+              approved
+            }
+
+      - name: Merge pull request
+        if: steps.check_approval.outputs.approved == true
+        run: echo "Pull request can be merged."
