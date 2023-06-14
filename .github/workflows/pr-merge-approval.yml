@@ -56,17 +56,15 @@ jobs:
               repo: context.repo.repo,
               pull_number: context.payload.pull_request.number
             });
-            const approver = 'shayan-shaikh
+
+            const approver = 'shayan-shaikh';
             const approved = reviews.some(review => review.user.login === approver && review.state === 'APPROVED');
-            console.log(approved)
             return {
               approved
             }
+
       - name: Exit with status
         if: steps.check_approval.outputs.approved != true
         run: |
           echo "Manager not yet approved"
           exit 1
-
-        
-  
