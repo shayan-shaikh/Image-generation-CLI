@@ -14,6 +14,7 @@ jobs:
       - name: Check if pull request is approved
         uses: actions/github-script@v4
         with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             const { data: pullRequest } = await github.pulls.get({
               owner: context.repo.owner,
@@ -29,5 +30,4 @@ jobs:
             if (!approvalExists) {
               core.setFailed('Pull request requires approval from ' + process.env.approvedByUser);
             }
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
