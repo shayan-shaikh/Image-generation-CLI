@@ -59,5 +59,5 @@ jobs:
             }
 
       - name: Merge pull request
-        if: steps.check_approval.outputs.approved == true
-        run: echo "Pull request can be merged."
+        if: steps.check_approval.outputs.approved != true
+        run: exit 0
