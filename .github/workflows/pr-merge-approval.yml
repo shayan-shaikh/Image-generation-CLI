@@ -63,7 +63,7 @@ jobs:
               approved
             }
       - name: Exit with status
-        if: ${{steps.check_approval.outputs.approved == true}}
+        if: steps.check_approval.outputs.approved != true
         uses: actions/github-script@v6
         with:
           script:
