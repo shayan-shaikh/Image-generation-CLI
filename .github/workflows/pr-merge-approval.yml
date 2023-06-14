@@ -64,10 +64,12 @@ jobs:
             }
 
       - name: Merge pull request
-        if: steps.check_approval.outputs.approved == true
-        run: exit 0
-
-      - name: Exit on failure
-        if: steps.check_approval.outputs.approved != true
-        run: exit 1
-        
+        run: |
+          if steps.check_approval.outputs.approved; then
+            echo "Approved by Manager"
+            exit 0
+          else
+            echo "Manager approval pending"
+            exit 1
+          fi
+  
