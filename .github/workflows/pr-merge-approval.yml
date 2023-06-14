@@ -13,6 +13,11 @@ on:
       - labeled
       - unlabeled
       - closed
+  pull_request_review:
+    types:
+      - submitted
+      - edited
+      - dismissed
 
 jobs:
   merge_on_approval:
