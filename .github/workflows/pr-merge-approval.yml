@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check if pull request is approved
+        env:
+          APPROVER: 'shayan-shaikh'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         uses: actions/github-script@v4
         with:
           script: |
@@ -28,6 +31,13 @@ jobs:
             if (!approvalExists) {
               core.setFailed('Pull request requires approval from ' + ${{env.APPROVER}});
             }
-        env:
-          APPROVER: 'shayan-shaikh'
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+
+
+
+
+
+
+
+
+
