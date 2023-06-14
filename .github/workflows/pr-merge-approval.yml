@@ -48,8 +48,6 @@ jobs:
       - name: Check if Manager approved
         id: check_approval
         uses: actions/github-script@v5
-        env: 
-          approver: shayan
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -58,8 +56,8 @@ jobs:
               repo: context.repo.repo,
               pull_number: context.payload.pull_request.number
             });
-
-            const approved = reviews.some(review => review.user.login === ${{env.approver}} && review.state === 'APPROVED');
+            const approver = 'shayan-shaikh
+            const approved = reviews.some(review => review.user.login === approver && review.state === 'APPROVED');
             console.log(approved)
             return {
               approved
