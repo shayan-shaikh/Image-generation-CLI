@@ -64,7 +64,7 @@ jobs:
             }
       - name: Exit with status
         if: steps.check_approval.outputs.approved != true
-        uses: actions/github-script@v6
+        uses: actions/github-script@v5
         with:
           script:
             core.setFailed('Manager not yet approved')
