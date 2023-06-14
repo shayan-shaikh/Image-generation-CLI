@@ -62,17 +62,12 @@ jobs:
             return {
               approved
             }
-
       - name: Exit with status
-        id: exit-with-status
-        run: |
-          if ${{ steps.check_approval.outputs.approved }}: then
-            echo "Approval received. Exiting with status 0."
-            exit 0
-          else
-            echo "Approval Pending. Exiting with status 1."
-            exit 1
-          fi
+        if: ${{steps.check_approval.outputs.approved == true}}
+        uses: actions/github-script@v6
+        with:
+          script:
+            core.setFailed('Manager not yet approved')
 
         
   
