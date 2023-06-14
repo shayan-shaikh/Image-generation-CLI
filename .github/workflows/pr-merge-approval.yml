@@ -10,9 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check if pull request is approved
-        env:
-          APPROVER: 'shayan-shaikh'
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         uses: actions/github-script@v4
         with:
           script: |
@@ -27,14 +24,12 @@ jobs:
               repo: context.repo.repo,
               pull_number: context.payload.pull_request.number
             });
-            const approvalExists = reviews.some(review => review.user.login === ${{env.APPROVER}} && review.state === 'APPROVED');
+            const approvalExists = reviews.some(review => review.user.login === approvedByUser && review.state === 'APPROVED');
             if (!approvalExists) {
-              core.setFailed('Pull request requires approval from ' + ${{env.APPROVER}});
+              core.setFailed('Pull request requires approval from ' + approvedByUser);
             }
-    
-
-
-
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
 
