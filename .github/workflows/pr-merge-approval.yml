@@ -60,4 +60,4 @@ jobs:
 
       - name: Merge pull request
         if: steps.check_approval.outputs.approved != true
-        run: exit 0
+        run: exit 1
