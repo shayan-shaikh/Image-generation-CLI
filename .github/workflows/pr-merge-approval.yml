@@ -12,7 +12,7 @@ jobs:
       approvedByUser: 'shayan-shaikh'
     steps:
       - name: Check if pull request is approved
-        uses: actions/github-script@v4
+        uses: actions/github-script@v6
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
