@@ -1,70 +1,40 @@
 name: Pull Request Approval
-
 on:
   pull_request:
     types:
       - opened
-      - edited
-      - reopened
       - synchronize
-      - ready_for_review
-      - review_requested
-      - review_request_removed
-      - labeled
-      - unlabeled
-      - closed
-  pull_request_review:
-    types:
-      - submitted
-      - edited
-      - dismissed
-
 jobs:
-  merge_on_approval:
+  check_approval:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checking for approval
-        run: echo "Approval is required."
-
-      - name: Get pull request information
-        id: pr
-        uses: actions/github-script@v5
+      - name: Check if pull request is approved
+        uses: actions/github-script@v4
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const { data: pullRequest } = await github.rest.pulls.get({
+            const { data: pullRequest } = await github.pulls.get({
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: context.payload.pull_request.number
             });
-
-            return {
-              pullRequestId: pullRequest.id,
-              pullRequestNumber: pullRequest.number,
-              author: pullRequest.user.login
-            }
-
-      - name: Check if Manager approved
-        id: check_approval
-        uses: actions/github-script@v5
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const { data: reviews } = await github.rest.pulls.listReviews({
+            const approvedByUser = 'shayan-shaikh';
+            const { data: reviews } = await github.pulls.listReviews({
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: context.payload.pull_request.number
             });
-
-            const approver = 'shayan-shaikh';
-            const approved = reviews.some(review => review.user.login === approver && review.state === 'APPROVED');
-            return {
-              approved
+            const approvalExists = reviews.some(review => review.user.login === approvedByUser && review.state === 'APPROVED');
+            if (!approvalExists) {
+              core.setFailed('Pull request requires approval from ' + approvedByUser);
             }
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Exit with status
-        if: steps.check_approval.outputs.approved != true
-        run: |
-          echo "Manager not yet approved"
-          exit 1
+
+
+
+
+
+
+
+
