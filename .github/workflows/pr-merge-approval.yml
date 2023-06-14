@@ -59,7 +59,7 @@ jobs:
               pull_number: context.payload.pull_request.number
             });
 
-            const approved = reviews.some(review => review.user.login === $approver && review.state === 'APPROVED');
+            const approved = reviews.some(review => review.user.login === ${{env.approver}} && review.state === 'APPROVED');
             console.log(approved)
             return {
               approved
