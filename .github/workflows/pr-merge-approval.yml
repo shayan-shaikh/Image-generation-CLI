@@ -16,17 +16,17 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const { data: reviews } = await github.pulls.listReviews({
+            const reviews = await github.pulls.listReviews({
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: context.payload.pull_request.number
             });
 
-            const mostRecentReview = reviews
-              .filter(review => review.user.login === process.env.approvedByUser && review.state === 'APPROVED')
-              .sort((a, b) => new Date(b.submitted_at) - new Date(a.submitted_at))
-              .shift();
+            const approvedReviews = reviews.data.filter(review => review.user.login === process.env.approvedByUser && review.state === 'APPROVED');
 
-            if (!mostRecentReview) {
+            if (approvedReviews.length === 0) {
               core.setFailed('Pull request requires approval from ' + process.env.approvedByUser);
+            } else {
+              const mostRecentReview = approvedReviews.reduce((prev, current) => (prev.submitted_at > current.submitted_at) ? prev : current);
+              console.log('Most recent review:', mostRecentReview);
             }
