@@ -12,17 +12,21 @@ jobs:
       approvedByUser: 'shayan-shaikh'
     steps:
       - name: Check if pull request is approved
-        uses: actions/github-script@v6
+        uses: actions/github-script@v4
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const { data: reviews } = await github.rest.pulls.listReviews({
+            const { data: reviews } = await github.pulls.listReviews({
               owner: context.repo.owner,
               repo: context.repo.repo,
               pull_number: context.payload.pull_request.number
             });
-            const approvalExists = reviews.some(review => review.user.login === process.env.approvedByUser && review.state === 'APPROVED');
-            if (!approvalExists) {
+
+            const mostRecentReview = reviews
+              .filter(review => review.user.login === process.env.approvedByUser && review.state === 'APPROVED')
+              .sort((a, b) => new Date(b.submitted_at) - new Date(a.submitted_at))
+              .shift();
+
+            if (!mostRecentReview) {
               core.setFailed('Pull request requires approval from ' + process.env.approvedByUser);
             }
-        
