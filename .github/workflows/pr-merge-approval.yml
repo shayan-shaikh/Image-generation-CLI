@@ -1,8 +1,5 @@
 name: Pull Request Approval
 on:
-  pull_request:
-    types:
-      - opened
   pull_request_review:
     types:
       - submitted
