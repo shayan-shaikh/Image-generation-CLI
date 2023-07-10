@@ -1,16 +1,39 @@
 name: Pull Request Approval
+
 on:
+  pull_request:
+    types:
+      - opened
   pull_request_review:
     types:
       - submitted
       - edited
       - dismissed
+
 jobs:
   check_approval:
     runs-on: ubuntu-latest
     env:
       approvedByUser: 'shayan-shaikh'
+      checkName: 'Pull Request Approval Check'
+      newCheckName: 'Pull Request Approval Check (Pending)'
     steps:
+      - name: Create a pending check
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const checkResponse = await github.checks.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              name: process.env.newCheckName,
+              head_sha: context.payload.pull_request.head.sha,
+              status: 'in_progress',
+              started_at: new Date().toISOString()
+            });
+
+            core.setOutput('checkId', checkResponse.data.id);
+
       - name: Check if pull request is approved
         uses: actions/github-script@v4
         with:
@@ -22,12 +45,53 @@ jobs:
               pull_number: context.payload.pull_request.number
             });
 
-            const latestReview = reviews.reduce((prev, current) => (new Date(prev.submitted_at) > new Date(current.submitted_at)) ? prev : current);
+            const latestReview = reviews.reduce((prev, current) =>
+              new Date(prev.submitted_at) > new Date(current.submitted_at) ? prev : current
+            );
 
             if (!latestReview) {
-              core.setFailed('Pull request requires approval from ' + process.env.approvedByUser);
+              await github.checks.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                check_run_id: context.payload.checkId,
+                name: process.env.checkName,
+                status: 'completed',
+                conclusion: 'failure',
+                completed_at: new Date().toISOString(),
+                output: {
+                  title: 'Pull Request Approval',
+                  summary: `Pull request requires approval from ${process.env.approvedByUser}`,
+                }
+              });
+              core.setFailed(`Pull request requires approval from ${process.env.approvedByUser}`);
             } else if (latestReview.user.login === process.env.approvedByUser && latestReview.state === 'APPROVED') {
-              console.log('Pull request is approved by ' + process.env.approvedByUser);
+              await github.checks.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                check_run_id: context.payload.checkId,
+                name: process.env.checkName,
+                status: 'completed',
+                conclusion: 'success',
+                completed_at: new Date().toISOString(),
+                output: {
+                  title: 'Pull Request Approval',
+                  summary: `Pull request is approved by ${process.env.approvedByUser}`,
+                }
+              });
+              console.log(`Pull request is approved by ${process.env.approvedByUser}`);
             } else {
-              core.setFailed('Pull request requires approval from ' + process.env.approvedByUser);
+              await github.checks.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                check_run_id: context.payload.checkId,
+                name: process.env.checkName,
+                status: 'completed',
+                conclusion: 'failure',
+                completed_at: new Date().toISOString(),
+                output: {
+                  title: 'Pull Request Approval',
+                  summary: `Pull request requires approval from ${process.env.approvedByUser}`,
+                }
+              });
+              core.setFailed(`Pull request requires approval from ${process.env.approvedByUser}`);
             }
