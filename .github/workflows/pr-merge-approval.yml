@@ -37,7 +37,7 @@ jobs:
       - name: Check if pull request is approved
         uses: actions/github-script@v4
         with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
+          github-token: ${{secrets.img-gen}}
           script: |
             const { data: reviews } = await github.pulls.listReviews({
               owner: context.repo.owner,
