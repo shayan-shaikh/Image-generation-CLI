@@ -18,8 +18,8 @@ jobs:
               with:
                 server_address: smtp.gmail.com
                 server_port: 465
-                username: shayan.chemicalsbazar@gmail.com
-                password: chembazar001
+                username: "shayan.chemicalsbazar@gmail.com"
+                password: "chembazar001"
                 subject: "OpenAI billing status"
                 to: shaikhshayan1@gmail.com
                 from: "Github Actions"
