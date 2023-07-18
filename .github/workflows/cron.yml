@@ -5,7 +5,7 @@ on:
   branches:
    - main
  schedule:
-    - cron: "24 23,11 * * *"
+    - cron: "25 23,11 * * *"
 jobs:
         send_email_alerts:
           runs-on: ubuntu-latest
@@ -16,6 +16,7 @@ jobs:
             - name: Send mail
               uses: dawidd6/action-send-mail@v3
               with:
+                server_address: smtp.example.com
                 subject: "OpenAI billing status"
                 to: shaikhshayan1@gmail.com
                 from: "Github Actions"
