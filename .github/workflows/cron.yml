@@ -1,0 +1,21 @@
+name: OpenAI Billing Alerts
+
+on:
+  schedule:
+    - cron: "16 11 * * *"
+jobs:
+        send_email_alerts:
+          runs-on: ubuntu-latest
+          steps:
+            - name: Fetch OpenAI API Usage
+              run: |
+                echo "this is test" > openai_usage.txt
+            - name: Send mail
+              uses: dawidd6/action-send-mail@v3
+              with:
+                subject: "OpenAI billing status"
+                to: shaikhshayan1@gmail.com
+                from: "Github Actions"
+                body: |
+                  $(cat openai_usage.txt)
+      
