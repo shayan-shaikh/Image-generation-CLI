@@ -17,6 +17,8 @@ jobs:
               uses: dawidd6/action-send-mail@v3
               with:
                 server_address: smtp.gmail.com
+                username: 1hk19cs139@hkbk.edu.in
+                password: Shayan@01
                 subject: "OpenAI billing status"
                 to: shaikhshayan1@gmail.com
                 from: "Github Actions"
