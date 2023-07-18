@@ -5,7 +5,7 @@ on:
   branches:
    - main
  schedule:
-    - cron: "25 23,11 * * *"
+    - cron: "38 23,11 * * *"
 jobs:
         send_email_alerts:
           runs-on: ubuntu-latest
@@ -17,8 +17,9 @@ jobs:
               uses: dawidd6/action-send-mail@v3
               with:
                 server_address: smtp.gmail.com
-                username: 1hk19cs139@hkbk.edu.in
-                password: Shayan@01
+                server_port: 465
+                username: shayan.chemicalsbazar@gmail.com
+                password: chembazar001
                 subject: "OpenAI billing status"
                 to: shaikhshayan1@gmail.com
                 from: "Github Actions"
