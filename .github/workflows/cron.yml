@@ -2,7 +2,7 @@ name: OpenAI Billing Alerts
 
 on:
   schedule:
-    - cron: "16 11 * * *"
+    - cron: "20 23,11 * * *"
 jobs:
         send_email_alerts:
           runs-on: ubuntu-latest
