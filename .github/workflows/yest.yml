@@ -17,3 +17,7 @@ jobs:
           yesterday=$(date -d "yesterday" +"%Y-%m-%d")
           echo "::set-output name=yesterday_date::$yesterday"
 
+      - name: Print output
+        run: |
+          echo ${{ steps.get_date.outputs.yesterday_date }}
+
