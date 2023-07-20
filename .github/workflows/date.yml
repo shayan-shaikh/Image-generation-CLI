@@ -8,12 +8,11 @@ on:
 jobs:
   echo_date:
     runs-on: ubuntu-latest
-    env:
-      CURRENT_DATE: ${{ steps.get_date.outputs.date }}
     steps:
       - name: Get Current Date
         id: get_date
         run: echo "date=$(date +'%Y-%m-%d')"
+        shell: bash
 
       - name: Echo Current Date
-        run: echo "The current date is $CURRENT_DATE"
+        run: echo "The current date is ${{ steps.get_date.outputs.date }}"
