@@ -9,20 +9,20 @@ jobs:
   display_dates:
     runs-on: ubuntu-latest
     env:
-      CURRENT_DATE: ''
-      YESTERDAY_DATE: ''
+      current-date: ''
+      previous-date: ''
     steps:
       - name: Set Current Date
         run: |
-          export CURRENT_DATE=$(date +'%Y-%m-%d')
-          echo "CURRENT_DATE=$CURRENT_DATE" >> $GITHUB_ENV
+          export current-date=$(date +'%Y-%m-%d')
+          echo "current-date=$current-date" >> $GITHUB_ENV
 
       - name: Set Yesterday's Date
         run: |
-          export YESTERDAY_DATE=$(date -d "yesterday" +'%Y-%m-%d')
-          echo "YESTERDAY_DATE=$YESTERDAY_DATE" >> $GITHUB_ENV
+          export previous-date=$(date -d "yesterday" +'%Y-%m-%d')
+          echo "previous-date=$previous-date" >> $GITHUB_ENV
 
       - name: Display Dates
         run: |
-          echo "Current Date: $CURRENT_DATE"
-          echo "Yesterday's Date: $YESTERDAY_DATE"
+          echo "Current Date: $current-date"
+          echo "Yesterday's Date: $previous-date"
