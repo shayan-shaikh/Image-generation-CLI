@@ -11,14 +11,14 @@ jobs:
     steps:
       - name: Get today's date
         run: |
-          date=$(date +'%Y-%m-%d')
+          currentdate=$(date +'%Y-%m-%d')
 
       - name: Get yesterday's date
         run: |
-          date=$(date -d "yesterday" +"%Y-%m-%d")
+          yestdate=$(date -d "yesterday" +"%Y-%m-%d")
 
       - name: Print today's date
-        run: echo "Today's date is $date"
+        run: echo "Today's date is $currentdate"
 
       - name: Print yesterday's date
-        run: echo "Yesterday's date is $date"
+        run: echo "Yesterday's date is $yestdate"
