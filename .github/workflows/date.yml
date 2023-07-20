@@ -16,4 +16,6 @@ jobs:
         run: echo "Current date is ${{ env.current-date }}"
         
       - name: Display Month start from env
-        run: echo "Month starts at ${{ env.start-month }}"
+        run: | 
+             yesterday=$(date -v-1d +%F)
+             echo "Yesterday was $yesterday"
