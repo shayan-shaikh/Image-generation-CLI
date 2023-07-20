@@ -1,4 +1,4 @@
-name: Print Today and Yesterday's Date
+name: Display Current and Yesterday's Dates
 
 on:
   push:
@@ -6,19 +6,23 @@ on:
       - main
 
 jobs:
-  print_date:
+  display_dates:
     runs-on: ubuntu-latest
+    env:
+      CURRENT_DATE: ''
+      YESTERDAY_DATE: ''
     steps:
-      - name: Get today's date
+      - name: Set Current Date
         run: |
-          currentdate=$(date +'%Y-%m-%d')
+          export CURRENT_DATE=$(date +'%Y-%m-%d')
+          echo "CURRENT_DATE=$CURRENT_DATE" >> $GITHUB_ENV
 
-      - name: Get yesterday's date
+      - name: Set Yesterday's Date
         run: |
-          yestdate=$(date -d "yesterday" +"%Y-%m-%d")
+          export YESTERDAY_DATE=$(date -d "yesterday" +'%Y-%m-%d')
+          echo "YESTERDAY_DATE=$YESTERDAY_DATE" >> $GITHUB_ENV
 
-      - name: Print today's date
-        run: echo "Today's date is $currentdate"
-
-      - name: Print yesterday's date
-        run: echo "Yesterday's date is $yestdate"
+      - name: Display Dates
+        run: |
+          echo "Current Date: $CURRENT_DATE"
+          echo "Yesterday's Date: $YESTERDAY_DATE"
