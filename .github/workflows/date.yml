@@ -8,16 +8,10 @@ on:
 jobs:
   print_date:
     env:
-     current-date: $(date +'%Y-%m-%d')
-     start-month: $(date +'%Y-%m-01')
+      current-date: $(date +'%Y-%m-%d')
+      start-month: $(date -d "$(date +'%Y-%m-01') - 1 day" +'%Y-%m-%d')
     runs-on: ubuntu-latest
-    steps:
-      - name: Set Current Date as Environment Variable
-        run: echo "CURRENT_DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
-
-      - name: Display Current Date
-        run: echo "The current date is $CURRENT_DATE"
-        
+    steps:        
       - name: Display date from env
         run: echo "Current date is ${{ env.current-date }}"
         
