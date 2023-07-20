@@ -1,0 +1,24 @@
+name: Print Today and Yesterday's Date
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  print_date:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get today's date
+        run: |
+          date=$(date +'%Y-%m-%d')
+
+      - name: Get yesterday's date
+        run: |
+          date=$(date -d "yesterday" +"%Y-%m-%d")
+
+      - name: Print today's date
+        run: echo "Today's date is $date"
+
+      - name: Print yesterday's date
+        run: echo "Yesterday's date is $date"
