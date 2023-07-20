@@ -9,7 +9,7 @@ jobs:
   print_date:
     env:
       current-date: $(date +'%Y-%m-%d')
-      start-month: $(date -d "$(date +'%Y-%m-01') - 1 day" +'%Y-%m-%d')
+      start-month: $(date +'%Y-%m-%d' - 1 day)
     runs-on: ubuntu-latest
     steps:        
       - name: Display date from env
