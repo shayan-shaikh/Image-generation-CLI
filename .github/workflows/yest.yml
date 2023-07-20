@@ -1,0 +1,19 @@
+name: Get Yesterday's Date
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  get_yesterday_date:
+    runs-on: ubuntu-latest
+    outputs:
+      yesterday_date: ${{ steps.get_date.outputs.yesterday_date }}
+    steps:
+      - name: Get Yesterday's Date
+        id: get_date
+        run: |
+          yesterday=$(date -d "yesterday" +"%Y-%m-%d")
+          echo "::set-output name=yesterday_date::$yesterday"
+
