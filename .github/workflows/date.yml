@@ -9,6 +9,7 @@ jobs:
   print_date:
     env:
      current-date: $(date +'%Y-%m-%d')
+     start-month: $(date -d $CURRENT_DATE '+%Y-%m-01')
     runs-on: ubuntu-latest
     steps:
       - name: Set Current Date as Environment Variable
@@ -19,3 +20,6 @@ jobs:
         
       - name: Display date from env
         run: echo "Current date is ${{ env.current-date }}"
+        
+      - name: Display Month start from env
+        run: echo "Month starts at ${{ env.start-month }}"
