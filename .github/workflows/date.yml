@@ -10,4 +10,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Echo Current Date
-        run: echo "The current date is $(date)"
+        run: echo "The current date is $(date +'%Y-%m-%d')"
