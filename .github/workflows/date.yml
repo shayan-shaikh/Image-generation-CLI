@@ -7,6 +7,8 @@ on:
 
 jobs:
   print_date:
+    env:
+     current-date: $(date +'%Y-%m-%d')
     runs-on: ubuntu-latest
     steps:
       - name: Set Current Date as Environment Variable
@@ -14,3 +16,6 @@ jobs:
 
       - name: Display Current Date
         run: echo "The current date is $CURRENT_DATE"
+        
+      - name: Display date from env
+        run: echo "Current date is ${{ env.current-date }}"
