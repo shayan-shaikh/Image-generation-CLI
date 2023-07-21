@@ -13,4 +13,6 @@ jobs:
         run: echo "MY_VAR=hello" >> $GITHUB_ENV
 
       - name: Use environment variable
-        run: echo "The value of MY_VAR is $MY_VAR"
+        run: echo "The value of MY_VAR is $MY_VAR world"
+        
+        
