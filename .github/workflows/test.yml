@@ -1,4 +1,4 @@
-name: Fetch Endpoint and Save to JSON
+name: Make API Call and Display Status
 
 on:
   push:
@@ -6,24 +6,13 @@ on:
       - main
 
 jobs:
-  fetch_endpoint:
+  api_call:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Make API call
+        run: |
+          curl --location https://valorant-api.com/v1/bundles/d958b181-4e7b-dc60-7c3c-e3a3a376a8d2
 
-      - name: Fetch Endpoint and Save to JSON
-        id: fetch_endpoint
+      - name: Display status
         run: |
-          curl -X GET "https://valorant-api.com/v1/bundles/d958b181-4e7b-dc60-7c3c-e3a3a376a8d2" > result.json
-
-      - name: Save Status to Output
-        run: |
-          status=$(jq -r '.status' result.json)
-          echo "status=$status" >>GITHUB_OUTPUT
-        id: save_status_output
-      
-      - name: Display Endpoint Status
-        run: |
-          status=${{ needs.fetch_endpoint.outputs.status }}
-          echo "Endpoint Status: $status"
+          echo "The status is: $(echo $response | jq -r '.status')"
