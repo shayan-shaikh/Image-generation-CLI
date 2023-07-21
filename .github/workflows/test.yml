@@ -1,18 +1,31 @@
-name: Export JavaScript Variable as Output
-
+name: OpenAI Billing Alerts
 on:
-  push:
-    branches:
-      - main
-
+  workflow_dispatch 
+  #Disabling cron scheduling for now for testing
 jobs:
-  print_date:
+  send_email_alerts:
+    environment: staging
+    env:
+      CURRENT_DATE: $(date +'%Y-%m-%d')
+      START_OF_MONTH: $(date +'%Y-%m-01')
+      CURRENT_MONTH: $(date +'%B')
+      domain: dev
     runs-on: ubuntu-latest
+    outputs:
+      usage_for_month: ${{ steps.get_usage.outputs.usage_for_month }}
     steps:
-      - name: Set JavaScript variable
+      - name: Fetch OpenAI API Usage
         run: |
-          var date = new Date();
-          var today = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+           curl -X GET "https://valorant-api.com/v1/bundles/d958b181-4e7b-dc60-7c3c-e3a3a376a8d2" >> test.json
 
-      - name: Export JavaScript variable as output
-        run: echo "Today's date is $today" | tee $GITHUB_ENV
+      - name: Construct Email body from the API response
+        id: get_usage
+        run: |
+          const fs = require('fs');
+          const jsonFile = fs.readFileSync('test.json');
+          const data = JSON.parse(jsonFile);
+          const total_usage = data.status;
+          console.log(`total_usage=${total_usage}`); >> $GITHUB_OUTPUT
+      
+      - name: Send Email
+        run: echo ${{ needs.send_email_alerts.outputs.usage_for_month }}
