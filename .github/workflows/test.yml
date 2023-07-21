@@ -18,7 +18,7 @@ jobs:
           API_ENDPOINT="https://valorant-api.com/v1/bundles/d958b181-4e7b-dc60-7c3c-e3a3a376a8d2"
           RESPONSE=$(curl -s $API_ENDPOINT)
           STATUS=$(echo $RESPONSE | jq -r '.status')
-          echo "status = ${STATUS}" >> $GITHUB_OUTPUT
+          echo "status = ${STATUS}" >> "$GITHUB_OUTPUT"
           
       - name: Display status
         run: echo " ${{ steps.get_status.outputs.status }}
