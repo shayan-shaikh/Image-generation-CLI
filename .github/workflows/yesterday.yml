@@ -1,26 +1,16 @@
-name: Display Current and Yesterday's Dates
+name: Share Variable
 
 on:
-  workflow_dispatch
+  push:
+    branches:
+      - main
 
 jobs:
-  display_dates:
+  share_variable:
     runs-on: ubuntu-latest
-    env:
-      CURRENT_DATE: ''
-      YESTERDAY_DATE: ''
     steps:
-      - name: Set Current Date
-        run: |
-          export CURRENT_DATE=$(date +'%Y-%m-%d')
-          echo "CURRENT_DATE=$CURRENT_DATE" >> $GITHUB_ENV
+      - name: Set environment variable
+        run: echo "MY_VAR=hello" >> $GITHUB_ENV
 
-      - name: Set Yesterday's Date
-        run: |
-          export YESTERDAY_DATE=$(date -d "yesterday" +'%Y-%m-%d')
-          echo "YESTERDAY_DATE=$YESTERDAY_DATE" >> $GITHUB_ENV
-
-      - name: Display Dates
-        run: |
-          echo "Current Date: $CURRENT_DATE"
-          echo "Yesterday's Date: $YESTERDAY_DATE"
+      - name: Use environment variable
+        run: echo "The value of MY_VAR is $MY_VAR"
