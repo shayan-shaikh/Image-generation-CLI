@@ -7,7 +7,7 @@ jobs:
   print_date:
     env:
       CURRENT_DATE: $(date +'%Y-%m-%d')
-      START_OF_MONTH: $(date +'%Y-%m-%1')
+      START_OF_MONTH: $(date +'%Y-%m-01')
     runs-on: ubuntu-latest
     steps:        
       - name: Display date from env
