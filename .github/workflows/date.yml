@@ -1,21 +1,18 @@
 name: Current Date Example
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch
 
 jobs:
   print_date:
     env:
-      current-date: $(date +'%Y-%m-%d')
-      start-month: $(date -v-1d +%F)
+      CURRENT_DATE: $(date +'%Y-%m-%d')
+      START_OF_MONTH: $(date +'%Y-%m-%1')
     runs-on: ubuntu-latest
     steps:        
       - name: Display date from env
-        run: echo "Current date is ${{ env.current-date }}"
+        run: echo "Current date is ${{ env.CURRENT_DATE }}"
         
       - name: Display Month start from env
         run: | 
-             yesterday=$(date -v-1d +%F)
-             echo "Yesterday was $yesterday"
+             echo "Current Month beginning at : ${{ env.START_OF_MONTH }}"
