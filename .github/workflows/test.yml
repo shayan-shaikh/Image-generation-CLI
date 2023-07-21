@@ -15,4 +15,4 @@ jobs:
 
       - name: Display status
         run: |
-          echo "The status is: $(echo $response | jq -r '.status')"
+          echo "The status is: $(jq -r '.status')"
