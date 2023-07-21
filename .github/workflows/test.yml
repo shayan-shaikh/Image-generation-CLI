@@ -15,7 +15,6 @@ jobs:
 
       - name: Make API call and display status
         run: |
-          API_ENDPOINT="https://valorant-api.com/v1/bundles/d958b181-4e7b-dc60-7c3c-e3a3a376a8d2"
-          RESPONSE=$(curl -s $API_ENDPOINT)
-          STATUS=$(echo $RESPONSE | jq -r '.status')
+          curl --location https://valorant-api.com/v1/bundles/d958b181-4e7b-dc60-7c3c-e3a3a376a8d2 > test.json
+          STATUS=$(echo $test.json | jq -r '.status')
           echo "API Status: $STATUS"
