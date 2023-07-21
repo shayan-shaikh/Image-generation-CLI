@@ -8,9 +8,6 @@ on:
 jobs:
   get_api_status:
     runs-on: ubuntu-latest
-    outputs:
-     current_status: ${{ steps.get_status.outputs.status }}
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -24,4 +21,4 @@ jobs:
           echo "status = ${STATUS}" >> $GITHUB_OUTPUT
           
       - name: Display status
-        run: echo " ${{ needs.get_api_status.outputs.current_status }}
+        run: echo " ${{ steps.get_status.outputs.status }}
