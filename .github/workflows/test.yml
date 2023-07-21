@@ -20,7 +20,7 @@ jobs:
       - name: Save Status to Output
         run: |
           status=$(jq -r '.status' result.json)
-          echo "::set-output name=status::$status"
+          echo "status=$status" >>GITHUB_OUTPUT
         id: save_status_output
       
       - name: Display Endpoint Status
