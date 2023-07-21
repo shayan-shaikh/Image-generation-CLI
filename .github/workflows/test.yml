@@ -21,4 +21,4 @@ jobs:
           echo "status = ${STATUS}" >> "$GITHUB_OUTPUT"
           
       - name: Display status
-        run: echo " ${{ steps.get_status.outputs.status }}
+        run: echo " ${{ steps.get_status.outputs.status }}"
