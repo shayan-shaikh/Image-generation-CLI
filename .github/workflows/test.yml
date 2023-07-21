@@ -1,1 +1,18 @@
+name: Export JavaScript Variable as Output
 
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  print_date:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set JavaScript variable
+        run: |
+          var date = new Date();
+          var today = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+
+      - name: Export JavaScript variable as output
+        run: echo "Today's date is $today" | tee $GITHUB_ENV
