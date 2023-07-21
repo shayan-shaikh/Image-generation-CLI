@@ -8,11 +8,20 @@ on:
 jobs:
   share_variable:
     runs-on: ubuntu-latest
+    env:
+      TEST: ''
     steps:
       - name: Set environment variable
-        run: echo "MY_VAR=hello" >> $GITHUB_ENV
+        run: | 
+          echo "MY_VAR=hello" >> $GITHUB_ENV
+          VAR1=92827
+          echo "TEST=$((VAR1/100))" >> $GITHUB_ENV
 
       - name: Use environment variable
-        run: echo "The value of MY_VAR is $MY_VAR world"
+        run: | 
+          echo "The value of MY_VAR is $MY_VAR world"
+          echo "The value of TEST is $TEST world"
+          echo "The value of MY_VAR is ${{ env.TEST }} world"
+
         
         
