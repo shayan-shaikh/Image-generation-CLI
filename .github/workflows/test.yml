@@ -8,13 +8,20 @@ on:
 jobs:
   get_api_status:
     runs-on: ubuntu-latest
+    outputs:
+     current_status: ${{ steps.get_status.outputs.status }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
       - name: Make API call and display status
+        id: get_status
         run: |
-          curl --location 'https://valorant-api.com/v1/bundles/d958b181-4e7b-dc60-7c3c-e3a3a376a8d2' > test.json
-          STATUS=$(echo $test.json | jq -r '.status')
-          echo "API Status: $STATUS"
+          API_ENDPOINT="https://valorant-api.com/v1/bundles/d958b181-4e7b-dc60-7c3c-e3a3a376a8d2"
+          RESPONSE=$(curl -s $API_ENDPOINT)
+          STATUS=$(echo $RESPONSE | jq -r '.status')
+          echo "status = ${STATUS}" >> $GITHUB_OUTPUT
+          
+      - name: Display status
+        run: echo " ${{ needs.get_api_status.outputs.current_status }}
