@@ -15,6 +15,6 @@ jobs:
 
       - name: Make API call and display status
         run: |
-          curl --location https://valorant-api.com/v1/bundles/d958b181-4e7b-dc60-7c3c-e3a3a376a8d2 > test.json
+          curl --location 'https://valorant-api.com/v1/bundles/d958b181-4e7b-dc60-7c3c-e3a3a376a8d2' > test.json
           STATUS=$(echo $test.json | jq -r '.status')
           echo "API Status: $STATUS"
