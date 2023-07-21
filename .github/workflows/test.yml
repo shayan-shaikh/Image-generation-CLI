@@ -1,31 +1,29 @@
-name: OpenAI Billing Alerts
-on:
-  workflow_dispatch 
-  #Disabling cron scheduling for now for testing
-jobs:
-  send_email_alerts:
-    environment: staging
-    env:
-      CURRENT_DATE: $(date +'%Y-%m-%d')
-      START_OF_MONTH: $(date +'%Y-%m-01')
-      CURRENT_MONTH: $(date +'%B')
-      domain: dev
-    runs-on: ubuntu-latest
-    outputs:
-      usage_for_month: ${{ steps.get_usage.outputs.usage_for_month }}
-    steps:
-      - name: Fetch OpenAI API Usage
-        run: |
-           curl -X GET "https://valorant-api.com/v1/bundles/d958b181-4e7b-dc60-7c3c-e3a3a376a8d2" >> test.json
+name: Fetch Endpoint and Save to JSON
 
-      - name: Construct Email body from the API response
-        id: get_usage
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  fetch_endpoint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Fetch Endpoint and Save to JSON
+        id: fetch_endpoint
         run: |
-          const fs = require('fs');
-          const jsonFile = fs.readFileSync('test.json');
-          const data = JSON.parse(jsonFile);
-          const total_usage = data.status;
-          console.log(`total_usage=${total_usage}`); >> $GITHUB_OUTPUT
+          curl -X GET "https://valorant-api.com/v1/bundles/d958b181-4e7b-dc60-7c3c-e3a3a376a8d2" > result.json
+
+      - name: Save Status to Output
+        run: |
+          status=$(jq -r '.status' result.json)
+          echo "::set-output name=status::$status"
+        id: save_status_output
       
-      - name: Send Email
-        run: echo ${{ needs.send_email_alerts.outputs.usage_for_month }}
+      - name: Display Endpoint Status
+        run: |
+          status=${{ needs.fetch_endpoint.outputs.status }}
+          echo "Endpoint Status: $status"
