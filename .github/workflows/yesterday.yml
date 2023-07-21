@@ -1,9 +1,7 @@
 name: Display Current and Yesterday's Dates
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch
 
 jobs:
   display_dates:
