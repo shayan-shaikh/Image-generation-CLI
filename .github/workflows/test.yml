@@ -1,4 +1,4 @@
-name: Make API Call and Display Status
+name: API Status Action
 
 on:
   push:
@@ -6,12 +6,16 @@ on:
       - main
 
 jobs:
-  api_call:
+  get_api_status:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Make API call
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Make API call and display status
         run: |
-          RESPONSE = $(curl --location https://valorant-api.com/v1/bundles/d958b181-4e7b-dc60-7c3c-e3a3a376a8d2)
+          API_ENDPOINT="https://valorant-api.com/v1/bundles/d958b181-4e7b-dc60-7c3c-e3a3a376a8d2"
+          RESPONSE=$(curl -s $API_ENDPOINT)
           STATUS=$(echo $RESPONSE | jq -r '.status')
           echo "API Status: $STATUS"
-
