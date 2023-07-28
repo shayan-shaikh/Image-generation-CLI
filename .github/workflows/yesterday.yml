@@ -2,7 +2,7 @@ name: Share Variable
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '15 7 * * *'
 
 jobs:
   share_variable:
@@ -15,7 +15,7 @@ jobs:
           echo "MY_VAR=hello" >> $GITHUB_ENV
           VAR1=92827
           echo "TEST=$((VAR1/100))" >> $GITHUB_ENV
-          date
+          echo "Run time : $(date)"
 
       - name: Use environment variable
         run: | 
