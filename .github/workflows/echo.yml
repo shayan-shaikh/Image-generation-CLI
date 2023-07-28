@@ -1,8 +1,7 @@
 name: Ten Minute Echo
 
 on:
-  schedule:
-    - cron: '*/10 * * * *'
+  workflow_dispatch
 
 jobs:
   echo_message:
