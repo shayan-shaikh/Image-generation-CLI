@@ -14,9 +14,8 @@ jobs:
         run: | 
           echo "MY_VAR=hello" >> $GITHUB_ENV
           VAR1=92827
-          TIME=$date
           echo "TEST=$((VAR1/100))" >> $GITHUB_ENV
-          echo $date
+          date
 
       - name: Use environment variable
         run: | 
