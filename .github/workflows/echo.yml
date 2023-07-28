@@ -1,0 +1,12 @@
+name: Ten Minute Echo
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+
+jobs:
+  echo_message:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo message
+        run: echo "This message will be echoed every ten minutes."
