@@ -16,6 +16,7 @@ jobs:
         run: |
           curl -X GET "https://valorant-api.com/v1/bundles/d958b181-4e7b-dc60-7c3c-e3a3a376a8d2" >> test.json
           response = $(cat test.json)
+          echo $date
           status = $(echo "$response" | jq -r '.status') >> 'GITHUB_OUTPUT'
           echo $status
 
